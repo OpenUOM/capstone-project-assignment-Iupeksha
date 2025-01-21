@@ -1,4 +1,7 @@
 const dbConnection = require("./sqlite");
+const knex_db = require("./db-config");
+
+const testBase = require("./testBase");
 
 dbConnection
   .getDbConnection()
@@ -16,150 +19,108 @@ function init(db) {
     _db = db;
 }
 
-const knex_db = require("./db-config");
-
 const dbinitialize = async () => {
-    testBase.resetDatabase(knex_db);
+    await testBase.resetDatabase(knex_db);
 }
 
 const readTeachers = async () => {
-    const sql = `SELECT * FROM teacher`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql)
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `SELECT * FROM teacher`;
+    try {
+        const data = await knex_db.raw(sql);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const readTeacherInfo = async (id) => {
-    const sql = `SELECT * FROM teacher WHERE id = ?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `SELECT * FROM teacher WHERE id = ?`;
+    try {
+        const data = await knex_db.raw(sql, [id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const addTeacher = async (id, name, age) => {
-    const sql = `INSERT INTO teacher(id,name,age) values (?, ?, ?)`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id, name, age])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `INSERT INTO teacher(id, name, age) VALUES (?, ?, ?)`;
+    try {
+        const data = await knex_db.raw(sql, [id, name, age]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const updateTeacher = async (name, age, id) => {
-    const sql = `UPDATE teacher SET name=?, age=? WHERE id=?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [name, age, id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `UPDATE teacher SET name=?, age=? WHERE id=?`;
+    try {
+        const data = await knex_db.raw(sql, [name, age, id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const deleteTeacher = async (id) => {
-    const sql = `DELETE FROM teacher WHERE id = ?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `DELETE FROM teacher WHERE id = ?`;
+    try {
+        const data = await knex_db.raw(sql, [id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const readStudents = async () => {
-    const sql = `SELECT * FROM student`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql)
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `SELECT * FROM student`;
+    try {
+        const data = await knex_db.raw(sql);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const readStudentInfo = async (id) => {
-    const sql = `SELECT * FROM student WHERE id = ?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `SELECT * FROM student WHERE id = ?`;
+    try {
+        const data = await knex_db.raw(sql, [id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const addStudent = async (id, name, age, religion) => {
-    const sql = `INSERT INTO student(id,name,age,religion) values (?, ?, ?, ?)`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id, name, age, religion])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `INSERT INTO student(id, name, age, religion) VALUES (?, ?, ?, ?)`;
+    try {
+        const data = await knex_db.raw(sql, [id, name, age, religion]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 const updateStudent = async (name, age, religion, id) => {
-    const sql = `UPDATE teacher SET name=?, age=?, religion=? WHERE id=?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [name, age, religion, id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
-} 
+    const sql = `UPDATE student SET name=?, age=?, religion=? WHERE id=?`;
+    try {
+        const data = await knex_db.raw(sql, [name, age, religion, id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
 
 const deleteStudent = async (id) => {
-    const sql = `DELETE FROM student WHERE id = ?`
-    return new Promise((resolve, reject) => {
-        knex_db
-            .raw(sql, [id])
-            .then((data) => {
-                resolve(data);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
+    const sql = `DELETE FROM student WHERE id = ?`;
+    try {
+        const data = await knex_db.raw(sql, [id]);
+        return data;
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = {
